@@ -1,0 +1,12 @@
+apply plugin: 'docker-compose'
+
+// see: https://plugins.gradle.org/plugin/com.avast.gradle.docker-compose
+dockerCompose {
+    dockerComposeWorkingDirectory = project.file('devtools/environment-setup')
+
+    rbaEnvironment {
+        projectName = 'evidencijaKlijenata'
+        useComposeFiles = ['docker-compose.yml']
+        stopContainers = false // brzi startup ako se containeri jos vrte
+    }
+}

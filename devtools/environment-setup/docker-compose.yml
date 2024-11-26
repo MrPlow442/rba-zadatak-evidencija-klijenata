@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  database:
+    image: mysql:9.1.0
+    container_name: rba_database
+    environment:
+      MYSQL_ROOT_PASSWORD: rba_pass
+      MYSQL_DATABASE: rba
+      MYSQL_USER: rba_user
+      MYSQL_PASSWORD: rba_pass
+    ports:
+      - "3306:3306"
+
+  wiremock:
+    build:
+      context: .
+      dockerfile: ./wiremock/mockserver.Dockerfile
+    hostname: wiremock
+    container_name: wiremock
+    ports:
+      - "9001:9001"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
