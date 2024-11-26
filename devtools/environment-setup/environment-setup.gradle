@@ -10,3 +10,15 @@ dockerCompose {
         stopContainers = false // brzi startup ako se containeri jos vrte
     }
 }
+
+task flywayMigrateLocalDb(type: JavaExec) {
+    dependsOn getTasksByName('classes', true)
+
+    getMainClass().set('hr.mlovrekovic.evidencijaklijenata.DatabaseApplication')
+//    environment("FLYWAY_URL", "jdbc:mysql://localhost:3306/rba?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC")
+    environment("FLYWAY_URL", "jdbc:mysql://localhost:3306/rba")
+    environment("FLYWAY_USER", "rba")
+    environment("FLYWAY_PASSWORD", "rba_pass")
+//    environment("FLYWAY_SCHEMAS", "$schemaName")
+    classpath = project('database').sourceSets.main.runtimeClasspath
+}

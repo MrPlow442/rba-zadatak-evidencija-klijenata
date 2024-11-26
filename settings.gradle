@@ -1,1 +1,3 @@
 rootProject.name = 'rba-zadatak-evidencija-klijenata'
+include 'database'
+include 'application'

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="dockerCompose up" type="GradleRunConfiguration" factoryName="Gradle">
+  <configuration default="false" name="dockerCompose down forced" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="env">
         <map>
@@ -9,14 +9,13 @@
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
       <option name="externalSystemIdString" value="GRADLE" />
-      <option name="scriptParameters" value="--stacktrace" />
+      <option name="scriptParameters" value="" />
       <option name="taskDescriptions">
         <list />
       </option>
       <option name="taskNames">
         <list>
-          <option value="rbaEnvironmentComposeUp" />
-          <option value="flywayMigrateLocalDb" />
+          <option value="rbaEnvironmentComposeDownForced" />
         </list>
       </option>
       <option name="vmOptions" />
