@@ -11,14 +11,3 @@ services:
       MYSQL_PASSWORD: rba_pass
     ports:
       - "3306:3306"
-
-  wiremock:
-    build:
-      context: .
-      dockerfile: ./wiremock/mockserver.Dockerfile
-    hostname: wiremock
-    container_name: wiremock
-    ports:
-      - "9001:9001"
-    volumes:
-      - ./wiremock/mappings:/home/wiremock/mappings
