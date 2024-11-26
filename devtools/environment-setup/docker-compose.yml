@@ -2,12 +2,11 @@ version: '3.9'
 
 services:
   database:
-    image: mysql:9.1.0
+    image: postgres:17.2
     container_name: rba_database
     environment:
-      MYSQL_ROOT_PASSWORD: rba_pass
-      MYSQL_DATABASE: rba
-      MYSQL_USER: rba_user
-      MYSQL_PASSWORD: rba_pass
+      POSTGRES_DB: rba
+      POSTGRES_USER: rba_user
+      POSTGRES_PASSWORD: rba_pass
     ports:
-      - "3306:3306"
+      - "5432:5432"
