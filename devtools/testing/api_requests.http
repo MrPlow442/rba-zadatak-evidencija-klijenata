@@ -1,0 +1,61 @@
+## USE THESE REQUESTS TO TEST THE API MANUALLY
+
+### Get all card requests
+GET http://localhost:8080/api/v1/card-request
+Accept: application/json
+
+
+###
+### Get Card Request by OIB
+GET http://localhost:8080/api/v1/card-request/10987654321
+Accept: application/json
+
+###
+### Create a New Card Request
+POST http://localhost:8080/api/v1/card-request
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Gospodin",
+  "lastName": "Covjek",
+  "oib": "12345678901",
+  "status": "PENDING"
+}
+
+###
+### Delete a Card Request by OIB
+DELETE http://localhost:8080/api/v1/card-request/10987654321
+Accept: application/json
+
+###
+### Replace a Card Request
+PUT http://localhost:8080/api/v1/card-request/12345678901
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "oib": "12345678901",
+  "status": "APPROVED"
+}
+
+###
+### Partially Update a Card Request
+PATCH http://localhost:8080/api/v1/card-request/12345678901
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "REJECTED"
+}
+
+###
+POST http://localhost:8080/api/v1/operations/card-request:send-message
+Content-Type: application/json
+
+{
+  "oib": "11111111111",
+  "status": "APPROVED"
+}

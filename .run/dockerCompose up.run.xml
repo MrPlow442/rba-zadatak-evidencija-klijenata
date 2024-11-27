@@ -17,6 +17,7 @@
         <list>
           <option value="rbaEnvironmentComposeUp" />
           <option value="flywayMigrateLocalDb" />
+          <option value="flywayMigrateLocalTestDb" />
         </list>
       </option>
       <option name="vmOptions" />

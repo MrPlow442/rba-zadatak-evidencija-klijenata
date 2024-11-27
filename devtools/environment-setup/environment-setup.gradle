@@ -18,6 +18,17 @@ task flywayMigrateLocalDb(type: JavaExec) {
     environment("FLYWAY_URL", "jdbc:postgresql://localhost:5432/rba")
     environment("FLYWAY_USER", "rba_user")
     environment("FLYWAY_PASSWORD", "rba_pass")
-//    environment("FLYWAY_SCHEMAS", "$schemaName")
+    environment("FLYWAY_SCHEMAS", "public")
+    classpath = project('database').sourceSets.main.runtimeClasspath
+}
+
+task flywayMigrateLocalTestDb(type: JavaExec) {
+    dependsOn getTasksByName('classes', true)
+
+    getMainClass().set('hr.mlovrekovic.evidencijaklijenata.DatabaseApplication')
+    environment("FLYWAY_URL", "jdbc:postgresql://localhost:5432/rba")
+    environment("FLYWAY_USER", "rba_user")
+    environment("FLYWAY_PASSWORD", "rba_pass")
+    environment("FLYWAY_SCHEMAS", "public-test")
     classpath = project('database').sourceSets.main.runtimeClasspath
 }
