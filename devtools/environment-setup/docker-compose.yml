@@ -13,6 +13,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
+    container_name: rba_zookeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
@@ -20,6 +21,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.4.0
+    container_name: rba_kafka
     depends_on:
       - zookeeper
     ports:

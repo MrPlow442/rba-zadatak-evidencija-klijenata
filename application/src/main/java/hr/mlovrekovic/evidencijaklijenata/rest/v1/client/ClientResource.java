@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/clients")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ClientResource {
 
     private final ClientService clientService;
