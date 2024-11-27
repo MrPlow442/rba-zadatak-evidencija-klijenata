@@ -4,7 +4,7 @@ export enum CardRequestStatus {
     REJECTED = "REJECTED"
 }
 
-export interface Client {
+export interface CardRequest {
     firstName: string;
     lastName: string;
     oib: string;

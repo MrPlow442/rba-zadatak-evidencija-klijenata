@@ -1,7 +1,7 @@
-CREATE TABLE client (
+CREATE TABLE card_request (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-    national_identifier VARCHAR(50) NOT NULL,
+    oib VARCHAR(11) NOT NULL,
     status VARCHAR(50) NOT NULL
 );

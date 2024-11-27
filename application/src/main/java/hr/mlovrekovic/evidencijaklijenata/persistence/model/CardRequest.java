@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 @Entity
-@Table(name = "client")
-public class Client {
+@Table(name = "card_request")
+public class CardRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,8 +19,8 @@ public class Client {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "national_identifier", nullable = false, unique = true)
-    private String nationalIdentifier;
+    @Column(name = "oib", nullable = false, unique = true)
+    private String oib;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -50,12 +50,12 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public String getNationalIdentifier() {
-        return nationalIdentifier;
+    public String getOib() {
+        return oib;
     }
 
-    public void setNationalIdentifier(String nationalIdentifier) {
-        this.nationalIdentifier = nationalIdentifier;
+    public void setOib(String nationalIdentifier) {
+        this.oib = nationalIdentifier;
     }
 
     public CardRequestStatus getStatus() {
@@ -70,22 +70,22 @@ public class Client {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return Objects.equals(id, client.id) && Objects.equals(firstName, client.firstName) && Objects.equals(lastName, client.lastName) && Objects.equals(nationalIdentifier, client.nationalIdentifier) && status == client.status;
+        CardRequest cardRequest = (CardRequest) o;
+        return Objects.equals(id, cardRequest.id) && Objects.equals(firstName, cardRequest.firstName) && Objects.equals(lastName, cardRequest.lastName) && Objects.equals(oib, cardRequest.oib) && status == cardRequest.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, nationalIdentifier, status);
+        return Objects.hash(id, firstName, lastName, oib, status);
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Client.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", CardRequest.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
                 .add("firstName='" + firstName + "'")
                 .add("lastName='" + lastName + "'")
-                .add("nationalIdentifier='" + nationalIdentifier + "'")
+                .add("nationalIdentifier='" + oib + "'")
                 .add("status=" + status)
                 .toString();
     }

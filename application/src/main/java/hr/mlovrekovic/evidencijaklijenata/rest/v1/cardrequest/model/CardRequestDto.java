@@ -1,16 +1,22 @@
-package hr.mlovrekovic.evidencijaklijenata.rest.v1.client.model;
+package hr.mlovrekovic.evidencijaklijenata.rest.v1.cardrequest.model;
 
 import hr.mlovrekovic.evidencijaklijenata.service.model.CardRequestStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-public class ClientDto {
+public class CardRequestDto {
 
     @NotBlank
+    @Size(max = 100)
     private String firstName;
     @NotBlank
+    @Size(max = 100)
     private String lastName;
     @NotBlank
+    @Pattern(regexp = "^[0-9]*$")
+    @Size(min = 11, max = 11)
     // @Oib // custom oib validator
     private String oib;
     @NotNull

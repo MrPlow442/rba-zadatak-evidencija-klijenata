@@ -10,23 +10,25 @@ import {
     TableRow
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
-import axios from "axios";
 import {useEffect, useState} from "react";
-import {Client} from "../model/client-types";
+import {CardRequest} from "../model/card-request-types";
 import {useNavigate} from "react-router";
+import {RouteConstants} from "../../constants/route-constants";
+import {deleteCardRequest, findAllCardRequests} from "../../service/card-request/card-request-service";
+import {useSnackbar} from "notistack";
 
-export const ClientList = () => {
-    const [clients, setClients] = useState<Client[]>([]);
+export const CardRequestList = () => {
+    const [clients, setClients] = useState<CardRequest[]>([]);
     const [open, setOpen] = useState(false);
     const [selectedOib, setSelectedOib] = useState<string | null>(null);
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        axios
-            .get("http://localhost:8080/api/v1/clients")
-            .then((response) => setClients(response.data))
-            .catch((error) => console.error("Error fetching clients:", error));
-    }, []);
+        findAllCardRequests()
+            .then((data) => setClients(data))
+            .catch((error) => enqueueSnackbar(`Error fetching clients: ${error.response.data.message}`, { variant: "error" }));
+    }, [enqueueSnackbar]);
 
 
     const handleDeleteClick = (oib: string) => {
@@ -41,10 +43,9 @@ export const ClientList = () => {
 
     const handleDelete = async () => {
         if (selectedOib) {
-            axios
-                .delete(`http://localhost:8080/api/v1/clients/${selectedOib}`)
+            deleteCardRequest(selectedOib)
                 .then(() => setClients((prev) => prev.filter((client) => client.oib !== selectedOib)))
-                .catch((error) => console.error("Error deleting client:", error));
+                .catch((error) => enqueueSnackbar(`Error deleting client: ${error.response.data.message}`, { variant: "error" }));
         }
         handleClose()
     }
@@ -56,7 +57,7 @@ export const ClientList = () => {
                 variant="contained"
                 color="primary"
                 startIcon={<Add />}
-                onClick={() => navigate("/clients/new")}
+                onClick={() => navigate(`/${RouteConstants.cardRequests}/${RouteConstants.modifiers.new}`)}
                 style={{ marginBottom: "16px" }}
             >
                 Kreiraj novog klijenta
@@ -80,7 +81,7 @@ export const ClientList = () => {
                                 <TableCell>
                                     <IconButton
                                         color="primary"
-                                        onClick={() => navigate(`/clients/edit/${client.oib}`)}
+                                        onClick={() => navigate(`/${RouteConstants.cardRequests}/${RouteConstants.modifiers.edit}/${client.oib}`)}
                                     >
                                         <Edit />
                                     </IconButton>

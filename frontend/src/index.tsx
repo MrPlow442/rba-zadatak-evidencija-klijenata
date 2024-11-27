@@ -3,22 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
-import {ClientDetails} from "./client/client-details/client-details";
-import {ClientList} from "./client/client-list/client-list";
+import {CardRequestDetails} from "./card-request/card-request-details/card-request-details";
+import {CardRequestList} from "./card-request/card-request-list/card-request-list";
+import {RouteConstants, RouteParams} from "./constants/route-constants";
+import {SnackbarProvider} from "notistack";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <BrowserRouter>
-          <Routes>
-              <Route path="/" element={<Navigate to="/clients" replace />} />
-              <Route path="clients" element={<ClientList />} />
-              <Route path="clients/new" element={<ClientDetails/>} />
-              <Route path="clients/edit/:oib" element={<ClientDetails />} />
-          </Routes>
-      </BrowserRouter>
+      <SnackbarProvider>
+          <BrowserRouter>
+              <Routes>
+                  <Route path="/" element={<Navigate to="/card-requests" replace />} />
+                  <Route path={RouteConstants.cardRequests} element={<CardRequestList />} />
+                  <Route path={`${RouteConstants.cardRequests}/${RouteConstants.modifiers.new}`} element={<CardRequestDetails/>} />
+                  <Route path={`${RouteConstants.cardRequests}/${RouteConstants.modifiers.edit}/${RouteParams.oib}`} element={<CardRequestDetails />} />
+              </Routes>
+          </BrowserRouter>
+      </SnackbarProvider>
   </React.StrictMode>
 );
 

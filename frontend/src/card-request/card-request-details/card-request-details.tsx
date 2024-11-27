@@ -1,34 +1,36 @@
 import {useFormik} from "formik";
 import {Button, MenuItem, Select, TextField} from "@mui/material";
-import {CardRequestStatus, Client} from "../model/client-types";
+import {CardRequestStatus, CardRequest} from "../model/card-request-types";
 import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
 import axios from "axios";
+import {createCardRequest, updateCardRequest} from "../../service/card-request/card-request-service";
+import {useSnackbar} from "notistack";
 
-export const ClientDetails = () => {
+export const CardRequestDetails = () => {
     const {oib} = useParams<{oib?: string}>();
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
 
-    const formik = useFormik<Client>({
+    const formik = useFormik<CardRequest>({
         initialValues: {
             firstName: '',
             lastName: '',
             oib: '',
             status: CardRequestStatus.PENDING,
         },
-        onSubmit:  (values: Client) => {
+        onSubmit:  (cardRequest: CardRequest) => {
             if (oib) {
-                // Update existing client
-                axios
-                    .put(`http://localhost:8080/api/v1/clients/${oib}`, values)
+                updateCardRequest(oib, cardRequest)
                     .then(() => navigate("/"))
-                    .catch((error) => console.error("Error updating client:", error));
+                    .catch((error) => enqueueSnackbar(`Error updating client: ${error.response.data.message}`, { variant: 'error' }));
             } else {
-                // Create new client
-                axios
-                    .post("http://localhost:8080/api/v1/clients", values)
+                createCardRequest(cardRequest)
                     .then(() => navigate("/"))
-                    .catch((error) => console.error("Error creating client:", error));
+                    .catch((error) => {
+                        console.log("!!!ERROR ", error);
+                        enqueueSnackbar(`Error creating client: ${error.response.data.message}`, { variant: 'error' });
+                    });
             }
         }
     });
@@ -36,16 +38,15 @@ export const ClientDetails = () => {
     useEffect(() => {
         if (oib) {
             axios
-                .get(`http://localhost:8080/api/v1/clients/${oib}`)
+                .get(`http://localhost:8080/api/v1/card-request/${oib}`)
                 .then((response) => {formik.setValues(response.data);})
-                // .then((response) => formik.setValues(response.data))
-                .catch((error) => console.error("Error fetching client:", error));
+                .catch((error) => enqueueSnackbar(`Error fetching client: ${error}`, { variant: 'error' }));
         }
-    }, [oib]);
+    }, [enqueueSnackbar, formik, oib]);
 
     return (
         <div>
-            <h1>Unesite podatke o klijentu</h1>
+            <h1>{ oib ? "Uredite" : "Unesite" } podatke o zahtjevu kartice</h1>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
