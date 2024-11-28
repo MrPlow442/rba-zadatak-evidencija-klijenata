@@ -7,22 +7,34 @@ import {CardRequestDetails} from "./card-request/card-request-details/card-reque
 import {CardRequestList} from "./card-request/card-request-list/card-request-list";
 import {RouteConstants, RouteParams} from "./constants/route-constants";
 import {SnackbarProvider} from "notistack";
+import {AuthProvider} from "./auth/auth-provider";
+import {Login} from "./auth/login";
+import {ProtectedRoute} from "./auth/protected-route";
+import {Layout} from "./components/layout";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <SnackbarProvider>
-          <BrowserRouter>
-              <Routes>
-                  <Route path="/" element={<Navigate to="/card-requests" replace />} />
-                  <Route path={RouteConstants.cardRequests} element={<CardRequestList />} />
-                  <Route path={`${RouteConstants.cardRequests}/${RouteConstants.modifiers.new}`} element={<CardRequestDetails/>} />
-                  <Route path={`${RouteConstants.cardRequests}/${RouteConstants.modifiers.edit}/${RouteParams.oib}`} element={<CardRequestDetails />} />
-              </Routes>
-          </BrowserRouter>
-      </SnackbarProvider>
+      <AuthProvider>
+          <SnackbarProvider>
+              <BrowserRouter>
+                  <Routes>
+                      <Route path="/" element={<Navigate to={`/${RouteConstants.cardRequests}`} replace />} />
+                      <Route path={RouteConstants.login} element={<Login />} />
+
+                      <Route element={<Layout />}>
+                          <Route element={<ProtectedRoute />}>
+                              <Route path={RouteConstants.cardRequests} element={<CardRequestList />} />
+                              <Route path={`${RouteConstants.cardRequests}/${RouteConstants.modifiers.new}`} element={<CardRequestDetails/>} />
+                              <Route path={`${RouteConstants.cardRequests}/${RouteConstants.modifiers.edit}/${RouteParams.oib}`} element={<CardRequestDetails />} />
+                          </Route>
+                      </Route>
+                  </Routes>
+              </BrowserRouter>
+          </SnackbarProvider>
+      </AuthProvider>
   </React.StrictMode>
 );
 

@@ -56,12 +56,14 @@ public class CardRequestService {
         }
 
         dto.setOib(oib);
-        cardRequestRepository.findByOib(dto.getOib())
+        var existing = cardRequestRepository.findByOib(dto.getOib())
                 .orElseThrow(() ->
                         new NotFoundException(String.format("Card request with OIB: %s not found", dto.getOib())));
 
-        var entity = CardRequestConverter.toEntity(dto);
-        return CardRequestConverter.toDto(cardRequestRepository.save(entity));
+        existing.setFirstName(dto.getFirstName());
+        existing.setLastName(dto.getLastName());
+        existing.setStatus(dto.getStatus());
+        return CardRequestConverter.toDto(cardRequestRepository.save(existing));
     }
 
     public CardRequestDto partialUpdate(String oib, Map<String, Object> values) {

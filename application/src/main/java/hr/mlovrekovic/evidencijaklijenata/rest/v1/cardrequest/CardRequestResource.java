@@ -12,7 +12,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/card-request")
-@CrossOrigin(origins = "http://localhost:3000")
 public class CardRequestResource {
 
     private final CardRequestService cardRequestService;

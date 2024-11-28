@@ -1,10 +1,13 @@
 import {useFormik} from "formik";
 import {Button, Container, MenuItem, Select, TextField} from "@mui/material";
-import {CardRequestStatus, CardRequest} from "../model/card-request-types";
+import {CardRequest, CardRequestStatus} from "../model/card-request-types";
 import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
-import axios from "axios";
-import {createCardRequest, updateCardRequest} from "../../service/card-request/card-request-service";
+import {
+    createCardRequest,
+    findOneCardRequest,
+    updateCardRequest
+} from "../../service/card-request/card-request-service";
 import {useSnackbar} from "notistack";
 
 export const CardRequestDetails = () => {
@@ -28,7 +31,6 @@ export const CardRequestDetails = () => {
                 createCardRequest(cardRequest)
                     .then(() => navigate("/"))
                     .catch((error) => {
-                        console.log("!!!ERROR ", error);
                         enqueueSnackbar(`Error creating client: ${error.response.data.message}`, { variant: 'error' });
                     });
             }
@@ -37,12 +39,12 @@ export const CardRequestDetails = () => {
 
     useEffect(() => {
         if (oib) {
-            axios
-                .get(`http://localhost:8080/api/v1/card-request/${oib}`)
-                .then((response) => {formik.setValues(response.data);})
-                .catch((error) => enqueueSnackbar(`Error fetching client: ${error}`, { variant: 'error' }));
+            findOneCardRequest(oib)
+                .then((response) => {formik.setValues(response);})
+                .catch((error) => enqueueSnackbar(`Error fetching client: ${error.message}`, { variant: 'error' }));
         }
-    }, [enqueueSnackbar, formik, oib]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enqueueSnackbar, oib]);
 
     return (
         <Container>

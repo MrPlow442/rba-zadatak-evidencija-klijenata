@@ -1,4 +1,5 @@
 export const RouteConstants =  {
+    login: 'login',
     cardRequests: 'card-requests',
     modifiers: {
         new: 'new',

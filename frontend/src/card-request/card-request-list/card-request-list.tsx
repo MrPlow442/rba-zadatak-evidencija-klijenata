@@ -1,6 +1,10 @@
 import {
-    Box,
-    Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
     IconButton,
     Paper,
     Table,
@@ -112,7 +116,6 @@ export const CardRequestList = () => {
             </TableContainer>
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Confirm Deletion</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         Jeste li sigurni da zelite izbrisati ovog klijenta?

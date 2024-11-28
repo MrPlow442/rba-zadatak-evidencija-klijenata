@@ -11,6 +11,7 @@ import java.util.StringJoiner;
 public class CardRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "first_name", nullable = false)
