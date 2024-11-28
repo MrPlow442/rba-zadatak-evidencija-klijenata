@@ -23,12 +23,7 @@ public class CardRequestResource {
 
     @GetMapping
     public ResponseEntity<List<CardRequestDto>> getCardRequests() {
-        var clients = cardRequestService.getAll();
-        if (clients.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+        return new ResponseEntity<>(cardRequestService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping

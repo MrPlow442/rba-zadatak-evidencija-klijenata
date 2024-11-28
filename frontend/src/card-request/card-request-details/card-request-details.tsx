@@ -1,5 +1,5 @@
 import {useFormik} from "formik";
-import {Button, MenuItem, Select, TextField} from "@mui/material";
+import {Button, Container, MenuItem, Select, TextField} from "@mui/material";
 import {CardRequestStatus, CardRequest} from "../model/card-request-types";
 import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
@@ -45,11 +45,12 @@ export const CardRequestDetails = () => {
     }, [enqueueSnackbar, formik, oib]);
 
     return (
-        <div>
+        <Container>
             <h1>{ oib ? "Uredite" : "Unesite" } podatke o zahtjevu kartice</h1>
             <form onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth
+                    sx={{mb: 3}}
                     id="firstName"
                     name="firstName"
                     label="Ime"
@@ -61,6 +62,7 @@ export const CardRequestDetails = () => {
                 />
                 <TextField
                     fullWidth
+                    sx={{mb: 3}}
                     id="lastName"
                     name="lastName"
                     label="Prezime"
@@ -72,6 +74,7 @@ export const CardRequestDetails = () => {
                 />
                 <TextField
                     fullWidth
+                    sx={{mb: 3}}
                     id="oib"
                     name="oib"
                     label="Oib"
@@ -83,6 +86,7 @@ export const CardRequestDetails = () => {
                 />
                 <Select
                     fullWidth
+                    sx={{mb: 3}}
                     id="status"
                     name="status"
                     label="Status"
@@ -95,13 +99,13 @@ export const CardRequestDetails = () => {
                     <MenuItem value={CardRequestStatus.REJECTED}>REJECTED</MenuItem>
                     <MenuItem value={CardRequestStatus.PENDING}>PENDING</MenuItem>
                 </Select>
-                <Button color="primary" variant="contained" fullWidth type="submit">
+                <Button color="primary" variant="contained" fullWidth sx={{mb: 3}} type="submit">
                     Spremi
                 </Button>
                 <Button color="error" variant="contained" fullWidth onClick={() => navigate(-1)}>
                     Odustani
                 </Button>
             </form>
-        </div>
+        </Container>
     );
 }

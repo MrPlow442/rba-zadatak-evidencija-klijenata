@@ -1,5 +1,6 @@
 import {
-    Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    Box,
+    Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     IconButton,
     Paper,
     Table,
@@ -18,7 +19,7 @@ import {deleteCardRequest, findAllCardRequests} from "../../service/card-request
 import {useSnackbar} from "notistack";
 
 export const CardRequestList = () => {
-    const [clients, setClients] = useState<CardRequest[]>([]);
+    const [cardRequests, setCardRequests] = useState<CardRequest[]>([]);
     const [open, setOpen] = useState(false);
     const [selectedOib, setSelectedOib] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ export const CardRequestList = () => {
 
     useEffect(() => {
         findAllCardRequests()
-            .then((data) => setClients(data))
+            .then((data) => setCardRequests(data))
             .catch((error) => enqueueSnackbar(`Error fetching clients: ${error.response.data.message}`, { variant: "error" }));
     }, [enqueueSnackbar]);
 
@@ -44,14 +45,14 @@ export const CardRequestList = () => {
     const handleDelete = async () => {
         if (selectedOib) {
             deleteCardRequest(selectedOib)
-                .then(() => setClients((prev) => prev.filter((client) => client.oib !== selectedOib)))
+                .then(() => setCardRequests((prev) => prev.filter((cr) => cr.oib !== selectedOib)))
                 .catch((error) => enqueueSnackbar(`Error deleting client: ${error.response.data.message}`, { variant: "error" }));
         }
         handleClose()
     }
 
     return (
-        <div>
+        <Container>
             <h1>Zahtjevi za kartice</h1>
             <Button
                 variant="contained"
@@ -73,27 +74,39 @@ export const CardRequestList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {clients.map((client) => (
-                            <TableRow key={client.oib}>
-                                <TableCell>{`${client.firstName} ${client.lastName}`}</TableCell>
-                                <TableCell>{client.oib}</TableCell>
-                                <TableCell>{client.status}</TableCell>
-                                <TableCell>
-                                    <IconButton
-                                        color="primary"
-                                        onClick={() => navigate(`/${RouteConstants.cardRequests}/${RouteConstants.modifiers.edit}/${client.oib}`)}
-                                    >
-                                        <Edit />
-                                    </IconButton>
-                                    <IconButton
-                                        color="error"
-                                        onClick={() => handleDeleteClick(client.oib)}
-                                    >
-                                        <Delete />
-                                    </IconButton>
+                        {cardRequests.length > 0 ? (
+                            cardRequests.map((cr) => (
+                                <TableRow key={cr.oib}>
+                                    <TableCell>{`${cr.firstName} ${cr.lastName}`}</TableCell>
+                                    <TableCell>{cr.oib}</TableCell>
+                                    <TableCell>{cr.status}</TableCell>
+                                    <TableCell>
+                                        <IconButton
+                                            color="primary"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/${RouteConstants.cardRequests}/${RouteConstants.modifiers.edit}/${cr.oib}`
+                                                )
+                                            }
+                                        >
+                                            <Edit />
+                                        </IconButton>
+                                        <IconButton
+                                            color="error"
+                                            onClick={() => handleDeleteClick(cr.oib)}
+                                        >
+                                            <Delete />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={4} align="center">
+                                    Nema podataka za prikaz.
                                 </TableCell>
                             </TableRow>
-                        ))}
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -114,6 +127,6 @@ export const CardRequestList = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </Container>
     );
 };

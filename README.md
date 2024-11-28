@@ -44,6 +44,7 @@ Ujedno je moguce i poslati poruku na Kafka topic putem POST requesta
 na `/api/v1/operations/card-request:send-message` endpoint primjer cega se nalazi u prethodno navedenoj datoteci
 
 ## Da sam imao vise vremena
+* Paginacija za getAll
 * Spring Security je ukljucen u projekt no nisam ga upotrijebio. Planirao sam zastititi API i uspostaviti komunikaciju sa frontendom preko JWT tokena
 * Frontend je barebones, nedostaje validacija i fali truda oko dizajna i prezentacije, isao sam iskljucivo na MVP funkcionalnost
 * Frontend testovi ne postoje trenutno. Nemam bas iskustva u testiranju u reactu pa sam to ostavio za kraj i nisam napravio
